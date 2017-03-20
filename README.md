@@ -7,7 +7,7 @@ A tool to change the bundle identifier of an Xcode project.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'change_bundleid'
+gem 'xcodeproj_setting'
 ```
 
 And then execute:
@@ -16,24 +16,24 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install change_bundleid
+    $ gem install xcodeproj_setting
 
 ## Usage
 
 ```
-Usage: change_bundleid [options]
-    -p, --path PATH                  [REQUIRED] Path to the Xcode project (xcproject, not xcworkspace)
+Usage: xcodeproj_setting [options]
+        --path PATH                  [REQUIRED] Path to the Xcode project (xcproject, not xcworkspace)
     -t, --target NAME                [REQUIRED] Project target
-    -c, --conf NAME                  PProject configuration (default = Release)
-    -i, --bundleid NAME              [REQUIRED] New bundle ID
-    -s, --skip-plist                 Don't modify the info.plist file
+    -c, --conf NAME                  Project configuration (default = Release)
+    -i, --key NAME                   [REQUIRED] Key to change
+    -p, --print                      Just print the current key's value and exit
+    -s, --value VALUE                [REQUIRED] Value to set for the key
     -v, --verbose                    Verbose mode
-    -h, --help                       Show this message
-```
+    -h, --help                       Show this message```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/FutureWorkshops/ChangeBundleID.
+Bug reports and pull requests are welcome on GitHub at https://github.com/FutureWorkshops/XcodeProjSetting.
 
 
 ## License
