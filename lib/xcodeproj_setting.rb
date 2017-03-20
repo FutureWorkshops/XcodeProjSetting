@@ -4,7 +4,7 @@ require 'xcodeproj'
 module XcodeProjSetting
   def self.change_setting(project_filepath, target_name, project_configuration, key, new_value, verbose)
 
-    configuration = self.get_config(project_filepath, target_name, project_configuration, verbose)
+    configuration = self.get_config_obj(project_filepath, target_name, project_configuration, verbose)
     if configuration.nil?
       puts "ERROR: Unable to find configuration '#{project_configuration}'!"
       exit -12
@@ -13,12 +13,12 @@ module XcodeProjSetting
     puts "*** Setting Xcode Project's #{key} to '#{new_value}' on target '#{target_name}' for configuration '#{project_configuration}'" if verbose == true
 
     configuration.build_settings[key] = new_value
-    project.save
+    configuration.project.save
     
   end
 
   def self.print_setting(project_filepath, target_name, project_configuration, key)
-    configuration = self.get_config(project_filepath, target_name, project_configuration, verbose)
+    configuration = self.get_config_obj(project_filepath, target_name, project_configuration, false)
     if configuration.nil?
       puts "ERROR: Unable to find configuration '#{project_configuration}'!"
       exit -12

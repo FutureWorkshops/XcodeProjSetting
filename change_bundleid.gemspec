@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'change_bundleid/version'
+require 'xcodeproj_setting/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "change_bundleid"
+  spec.name          = "xcpdeproj_setting"
   spec.version       = ChangeBundleid::VERSION
   spec.authors       = ["Fabio Gallonetto"]
   spec.email         = ["fabio@futureworkshops.com"]
 
-  spec.summary       = "A tool to change the bundle identifier of an Xcode project"
-  spec.description   = "A tool to change the bundle identifier of an Xcode project"
-  spec.homepage      = "http://www.github.com/FutureWorkshops/ChangeBundleID"
+  spec.summary       = "A tool to change a setting in an Xcode project"
+  spec.description   = "A tool to change a setting in an Xcode project"
+  spec.homepage      = "http://www.github.com/FutureWorkshops/XcodeProjSetting"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
@@ -22,7 +22,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "xcodeproj", "~> 1.4.2"
-  spec.add_dependency "plist", "~> 3.2.0"
 
   spec.add_development_dependency "bundler", "~> 1.14"
   spec.add_development_dependency "rake", "~> 10.0"

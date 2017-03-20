@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'change_bundleid'
+require 'xcodeproj_setting'
 require 'optparse'
 require 'ostruct'
 
@@ -8,26 +8,32 @@ options = OpenStruct.new
 options.skip_plist = false
 options.verbose = false
 options.conf = 'Release'
+options.print = false
 
 opt_parser = OptionParser.new do |opt|
-  opt.banner = "Usage: change_bundleid [options]" 
+  opt.banner = "Usage: xcodeproj_setting [options]" 
   opt.on('-p', '--path PATH', "[REQUIRED] Path to the Xcode project (xcproject, not xcworkspace)") { |o| options.path = o }
   opt.on('-t', '--target NAME', "[REQUIRED] Project target") { |o| options.target = o }
-  opt.on('-c', '--conf NAME', "PProject configuration (default = Release)") { |o| options.conf = o }
-  opt.on('-i', '--bundleid NAME', "[REQUIRED] New bundle ID") { |o| options.bundleid = o }
-  opt.on('-s', '--skip-plist', "Don't modify the info.plist file") { options.skip_plist = true }
+  opt.on('-c', '--conf NAME', "Project configuration (default = Release)") { |o| options.conf = o }
+  opt.on('-i', '--key NAME', "[REQUIRED] Key to change") { |o| options.key = o }
+  opt.on('-p', '--print', "Just print the current key's value and exit") { options.print = true }
+  opt.on('-s', '--value VALUE', "[REQUIRED] Value to set for the key") { |o| options.value = o }
   opt.on('-v', '--verbose', "Verbose mode") { options.verbose = true }
   opt.on_tail("-h", "--help", "Show this message") { puts opt; exit }
 end
 
 opt_parser.parse!(ARGV)
-mandatory = [:path, :target, :conf, :bundleid]
+mandatory = [:path, :target, :conf, :key]
+mandatory << :value unless options.print == true
 missing = mandatory.select { |p| options[p].nil? }
 unless missing.empty?
   raise OptionParser::MissingArgument.new(missing.join(', '))
 end
 #puts options
 
-
-ChangeBundleID.change_bundle_id(options.path, options.target, options.conf, options.bundleid, options.verbose, options.skip_plist)
+if options.print == false
+  XcodeProjSetting.change_setting(options.path, options.target, options.conf, options.key, options.value, options.verbose)
+else
+  XcodeProjSetting.print_setting(options.path, options.target, options.conf, options.key)
+end
 
