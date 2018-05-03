@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.executables    = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "xcodeproj", "~> 1.4.2"
+  spec.add_dependency 'xcodeproj', '~> 1.5', '>= 1.5.7'
 
   spec.add_development_dependency "bundler", "~> 1.14"
   spec.add_development_dependency "rake", "~> 10.0"
