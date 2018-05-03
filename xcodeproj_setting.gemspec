@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'xcodeproj_setting/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "xcpdeproj_setting"
+  spec.name          = "xcodeproj_setting"
   spec.version       = ChangeBundleid::VERSION
   spec.authors       = ["Fabio Gallonetto"]
   spec.email         = ["fabio@futureworkshops.com"]
