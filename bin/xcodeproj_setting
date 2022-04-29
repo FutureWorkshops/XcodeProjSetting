@@ -6,9 +6,9 @@ require 'ostruct'
 
 options = OpenStruct.new
 options.skip_plist = false
-options.verbose = false
 options.conf = 'Release'
 options.print = false
+options.print_version = false
 
 opt_parser = OptionParser.new do |opt|
   opt.banner = "Usage: xcodeproj_setting [options]" 
@@ -18,7 +18,7 @@ opt_parser = OptionParser.new do |opt|
   opt.on('-i', '--key NAME', "[REQUIRED] Key to change") { |o| options.key = o }
   opt.on('-p', '--print', "Just print the current key's value and exit") { options.print = true }
   opt.on('-s', '--value VALUE', "[REQUIRED] Value to set for the key") { |o| options.value = o }
-  opt.on('-v', '--verbose', "Verbose mode") { options.verbose = true }
+  opt.on('-v', '--version', "Print version") { options.print_version = true }
   opt.on_tail("-h", "--help", "Show this message") { puts opt; exit }
 end
 
@@ -26,13 +26,15 @@ opt_parser.parse!(ARGV)
 mandatory = [:path, :target, :conf, :key]
 mandatory << :value unless options.print == true
 missing = mandatory.select { |p| options[p].nil? }
-unless missing.empty?
+unless missing.empty? || options.print_version
   raise OptionParser::MissingArgument.new(missing.join(', '))
 end
 #puts options
 
-if options.print == false
-  XcodeProjSetting.change_setting(options.path, options.target, options.conf, options.key, options.value, options.verbose)
+if options.print_version
+  puts "Version: " + ChangeBundleid::VERSION
+elsif options.print == false
+  XcodeProjSetting.change_setting(options.path, options.target, options.conf, options.key, options.value, false)
 else
   XcodeProjSetting.print_setting(options.path, options.target, options.conf, options.key)
 end
